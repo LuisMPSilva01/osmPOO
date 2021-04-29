@@ -20,11 +20,11 @@ public class Avancado extends Jogador{
     }
 
     public Avancado(Avancado avan){
-        super(avan.jogador_get_ID(), avan.jogador_get_nome(),
-              avan.jogador_get_velocidade(), avan.jogador_get_resistencia(),
-              avan.jogador_get_destreza(), avan.jogador_get_impulsao(),
-              avan.jogador_get_jogoDeCabeca(),avan.jogador_get_remate(),
-              avan.jogador_get_passe());
+        super(avan.get_ID(), avan.get_nome(),
+              avan.get_velocidade(), avan.get_resistencia(),
+              avan.get_destreza(), avan.get_impulsao(),
+              avan.get_jogoDeCabeca(),avan.get_remate(),
+              avan.get_passe());
 
         this.posicaoDeAtaque = avan.avancado_get_posicaoDeAtaque();
     }
