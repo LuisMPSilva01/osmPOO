@@ -1,5 +1,5 @@
 
-public class Jogador {
+public abstract  class Jogador {
     private String ID;
     private String nomeDoJogador;
     private Double velocidade;
@@ -9,7 +9,7 @@ public class Jogador {
     private Double jogoDeCabeca;
     private Double remate;
     private Double passe;
-
+    
     public Jogador(){
         this.ID ="";
         this.nomeDoJogador = "";
@@ -138,9 +138,7 @@ public class Jogador {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Jogador clone(){
-        return new Jogador(this);
-    }
+    public abstract Jogador clone();
 
     public boolean equals(Object o){
         if(this == o) return true;
