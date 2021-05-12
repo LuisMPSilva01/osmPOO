@@ -1,6 +1,5 @@
 import java.util.*;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Equipa {
     private String nomeDaEquipa;
