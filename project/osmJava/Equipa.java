@@ -16,59 +16,29 @@ public class Equipa {
         this.jogadores = new ArrayList<>();
     }
 
+    public Equipa(Equipa eq){
+        this.nomeDaEquipa = eq.getNome();
+        this.jogadores = eq.getJogadores();
+    }
+
     public boolean equipaValida(Equipa team){
         return (11>=team.jogadores.size());
     }
 
     public void addJogador(Jogador player){
-        if(player instanceof Avancado){
-            Avancado avan = (Avancado) player;
-            this.jogadores.add(avan.clone());
-        }
-        if(player instanceof Defesa){
-            Defesa def = (Defesa) player;
-            this.jogadores.add(def.clone());
-        }
-        if(player instanceof GuardaRedes){
-            GuardaRedes gr = (GuardaRedes) player;
-            this.jogadores.add(gr.clone());
-        }
-        if(player instanceof Lateral){
-            Lateral lat = (Lateral) player;
-            this.jogadores.add(lat.clone());
-        }
-        if(player instanceof Medio){
-            Medio med = (Medio) player;
-            this.jogadores.add(med.clone());
-        }
+        this.jogadores.add(player.clone());
     }
 
-    public Jogador getJogador(String ID){
-        for(Jogador player : this.jogadores){
-            if(player.get_ID().equals(ID)) {
-                if(player instanceof Avancado){
-                    Avancado avan = (Avancado) player;
-                    return avan.clone();
-                }
-                if(player instanceof Defesa){
-                    Defesa def = (Defesa) player;
-                    return def.clone();
-                }
-                if(player instanceof GuardaRedes){
-                    GuardaRedes gr = (GuardaRedes) player;
-                    return gr.clone();
-                }
-                if(player instanceof Lateral){
-                    Lateral lat = (Lateral) player;
-                    return lat.clone();
-                }
-                if(player instanceof Medio){
-                    Medio med = (Medio) player;
-                    return med.clone();
-                }
-            }
+    public Jogador getJogador(int numero){
+        Jogador j=null;
+        for (int i=0;i<this.jogadores.size();i++){
+            if(numero==this.jogadores.get(i).get_numeroJogador()) return j=this.jogadores.get(i).clone();
         }
-        return null;
+        return j;
+    }
+
+    public List<Jogador> getJogadores(){
+        return this.jogadores.stream().map(Jogador::clone).collect(Collectors.toList());
     }
 
     public String getNome(){
@@ -77,6 +47,23 @@ public class Equipa {
 
     public void setNome(String nomeDaEquipa){
         this.nomeDaEquipa=nomeDaEquipa;
+    }
+
+    public static Equipa parse(String input){
+        String[] campos = input.split(",");
+        return new Equipa(campos[0]);
+    }
+
+    public String toString(){
+        String r =  "Equipa:" + this.nomeDaEquipa + "\n";
+        for (Jogador j : jogadores){
+            r += j.toString();
+        }
+        return r;
+    }
+
+    public Equipa clone(){
+        return new Equipa(this);
     }
 }
 
