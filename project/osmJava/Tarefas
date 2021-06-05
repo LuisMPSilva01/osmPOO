@@ -1,0 +1,14 @@
+Onde da print a "New menu" dar print ao nome da equipa/Liga/jogador
+
+Alterar os stats do jogador
+Verificar no inicio se os jogadores tem numeros repetidos
+Criar um jogador a partir de IO
+
+Guardar a liga em ficheiro objeto
+Ter a opçao para ler de ficheiro objeto/começar do zero/ficheiro logs
+
+Implementar a interface equipa de footbool com metodos para calcular a qualidade do plantel e de escolha de estrategias
+para alem dissom tbm ter plantel inicial e suplentes
+Calcular o outcome do jogo a partir da qualidade de 2 equipas
+
+Simular um jogo

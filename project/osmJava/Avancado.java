@@ -1,6 +1,3 @@
-
-// Uma SmartBulb tem uma tonalidade (WARM, NEUTRAL, COLD) que pode ser controlada.
-
 public class Avancado extends Jogador {
     public Avancado(){
         super();

@@ -27,6 +27,18 @@ public class Jogo {
         substitucoesFora = new HashMap<>(sf);
     }
 
+    public Jogo (Jogo jogo){
+        equipaCasa = jogo.getEquipaCasa();
+        equipaFora = jogo.getEquipaFora();
+        golosCasa = jogo.getGolosCasa();
+        golosFora = jogo.getGolosFora();
+        date = jogo.getDate();
+        jogadoresCasa = jogo.getJogadoresCasa();
+        jogadoresFora = jogo.getJogadoresFora();
+        substituicoesCasa = jogo.getSubstituicoesCasa();
+        substitucoesFora = jogo.getSubstitucoesFora();
+    }
+
     public static Jogo parse(String input){
         String[] campos = input.split(",");
         String[] data = campos[4].split("-");
@@ -57,5 +69,81 @@ public class Jogo {
         return  "Jogo:" + equipaCasa + " - " + equipaFora;
                 //+ " -> " + substituicoesCasa.toString()
                 //+ " -> " + substitucoesFora.toString();
+    }
+
+    public String getEquipaCasa() {
+        return equipaCasa;
+    }
+
+    public void setEquipaCasa(String equipaCasa) {
+        this.equipaCasa = equipaCasa;
+    }
+
+    public String getEquipaFora() {
+        return equipaFora;
+    }
+
+    public void setEquipaFora(String equipaFora) {
+        this.equipaFora = equipaFora;
+    }
+
+    public int getGolosCasa() {
+        return golosCasa;
+    }
+
+    public void setGolosCasa(int golosCasa) {
+        this.golosCasa = golosCasa;
+    }
+
+    public int getGolosFora() {
+        return golosFora;
+    }
+
+    public void setGolosFora(int golosFora) {
+        this.golosFora = golosFora;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public List<Integer> getJogadoresCasa() {
+        return new ArrayList<>(this.jogadoresCasa);
+    }
+
+    public void setJogadoresCasa(List<Integer> jogadoresCasa) {
+        this.jogadoresCasa = new ArrayList<>(jogadoresCasa);
+    }
+
+    public List<Integer> getJogadoresFora() {
+        return new ArrayList<>(this.jogadoresFora);
+    }
+
+    public void setJogadoresFora(List<Integer> jogadoresFora) {
+        this.jogadoresFora = new ArrayList<>(jogadoresFora);
+    }
+
+    public Map<Integer, Integer> getSubstituicoesCasa() {
+        return new HashMap<>(substituicoesCasa);
+    }
+
+    public void setSubstituicoesCasa(Map<Integer, Integer> substituicoesCasa) {
+        this.substituicoesCasa = new HashMap<>(substituicoesCasa);
+    }
+
+    public Map<Integer, Integer> getSubstitucoesFora() {
+        return new HashMap<>(substitucoesFora);
+    }
+
+    public void setSubstitucoesFora(Map<Integer, Integer> substitucoesFora) {
+        this.substitucoesFora = new HashMap<>(substitucoesFora);
+    }
+
+    public Jogo clone(){
+        return new Jogo(this);
     }
 }

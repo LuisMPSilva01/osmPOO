@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract  class Jogador {
+    private List<String> historial;
     private String nomeJogador;
     private int numeroJogador;
     private int velocidade, resistencia, destreza, impulsao, cabeca, remate, passe;
@@ -14,6 +17,7 @@ public abstract  class Jogador {
         this.cabeca=0;
         this.remate=0;
         this.passe=0;
+        this.historial=new ArrayList<String>();
     }
 
 
@@ -29,6 +33,7 @@ public abstract  class Jogador {
         this.cabeca=jogoDeCabeca;
         this.remate=remate;
         this.passe=passe;
+        this.historial= new ArrayList<String>();
     }
     
     public Jogador(Jogador player){
@@ -41,6 +46,7 @@ public abstract  class Jogador {
         this.cabeca=player.get_cabeca();
         this.remate=player.get_remate();
         this.passe=player.get_passe();
+        this.historial=player.getHistorial();
     }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +78,7 @@ public abstract  class Jogador {
     public int get_passe(){
         return this.passe;
     }
+    public List<String> getHistorial(){return new ArrayList<String>(this.historial);}
 
 ////////////////////////////////////////////////////////////////////////////////77
 
@@ -142,5 +149,9 @@ public abstract  class Jogador {
         sb.append("Remate: ").append(this.get_remate()).append("\n");
         sb.append("Passe: ").append(this.get_passe()).append("\n");
         return sb.toString();
+    }
+
+    public void addToHistorial(String nomeEquipa){
+        this.historial.add(nomeEquipa);
     }
 }
