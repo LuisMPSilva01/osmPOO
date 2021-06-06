@@ -102,7 +102,8 @@ public class TextUI {
             listaJogadores(jogadors);
             h.readString("Ensira o numero do jogador que pretende escolher: ");
             i=Integer.parseInt(h.getLine());
-            h.setError(i>=jogadors.size()||i<0);
+            int finalI = i;
+            h.setError(jogadors.stream().noneMatch(j -> j.get_numeroJogador() == finalI));
         } while (h.isError());
 
         return i;
@@ -243,6 +244,7 @@ public class TextUI {
                     makeFormacao(team,local);
                 }
         }
+        StringHandler.printString("\nPara confirmar escolha a opção para sair");
     }
 
     public void executarJogo(Date d) {

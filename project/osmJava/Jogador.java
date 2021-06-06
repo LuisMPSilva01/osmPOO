@@ -135,11 +135,11 @@ public class Jogador {
         int i=-1;
         int j=0;
         for (Jogador player: jogadores){
-            j++;
             if (player.get_numeroJogador()==nJogador) {
                 i=j;
                 break;
             }
+            j++;
         }
         if (i==-1) throw new JogadorInexistenteExeption("Jogador nao encontrado");
         else return i;
