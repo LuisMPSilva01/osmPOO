@@ -1,4 +1,4 @@
-import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 public class TextUI {
     // o modelo
     private Liga model;
+    private NewGame model2;
 
     //scanner
-    private Scanner sc;
+    private final Scanner sc;
 
     /**
      * Construtor que cria os menus e o model
@@ -16,6 +17,7 @@ public class TextUI {
 
     public TextUI() throws LinhaIncorretaException {
         this.model = new Liga();
+        this.model2 = new NewGame();
         this.model = Liga.fromParse();
         sc = new Scanner(System.in);
     }
@@ -46,12 +48,18 @@ public class TextUI {
     private void gestaoDeEquipas() {
         NewMenu menuLiga = new NewMenu(new String[] {"Lista de equipas",
                 "Alterar equipa",
-                "Adicionar equipa"});
+                "Adicionar equipa",
+                "Fazer um jogo"});
 
         //registar os handlers
         menuLiga.setHandler(1, this::listaEquipas);
-        menuLiga.setHandler(2, () -> alterarEquipa(escolhaEquipa()));
+        menuLiga.setHandler(2, () -> alterarEquipa(escolhaEquipa("")));
         menuLiga.setHandler(3, this::adicionarEquipa);
+        menuLiga.setHandler(4, () -> {
+            makeFormacao(escolhaEquipa("Escolha a equipa da casa:"),"casa");
+            makeFormacao(escolhaEquipa("Escolha a equipa de fora:"),"fora");
+            executarJogo(StringHandler.readADate());
+        });
 
         menuLiga.run();
     }
@@ -72,29 +80,29 @@ public class TextUI {
         }
     }
 
-    private String escolhaEquipa(){
+    private String escolhaEquipa(String msg){
         List<String> strings = this.model.nomeDasEquipas();
         StringHandler h = new StringHandler();
+        if (!msg.equals("")) StringHandler.printString(msg);
         int i;
         do {
-            h.printStrings(strings);
+            StringHandler.printStrings(strings,true);
             h.readString("Ensira o numero da equipa que pretende escolher: ");
             i=Integer.parseInt(h.getLine());
-            if(!(i>0&&i<strings.size())) h.setError(true);
-            else h.setError(false);
+            h.setError(!(i > 0 && i < strings.size()));
         } while (h.isError());
 
         return strings.get(i);
     }
-    private int escolhaJogador(String equipa){
+
+    private int escolhaJogador(List<Jogador> jogadors){
         StringHandler h = new StringHandler();
         int i;
         do {
-            listaJogadores(equipa);
+            listaJogadores(jogadors);
             h.readString("Ensira o numero do jogador que pretende escolher: ");
             i=Integer.parseInt(h.getLine());
-            if(this.model.getEquipas().get(equipa).getJogador(i)==null) h.setError(true);
-            else h.setError(false);
+            h.setError(i>=jogadors.size()||i<0);
         } while (h.isError());
 
         return i;
@@ -103,12 +111,14 @@ public class TextUI {
     private void alterarEquipa(String nomeDaequipa){ //Tem que dar print no view
         NewMenu menuEquipa = new NewMenu(new String[] {"Lista de jogadores",
                 "Alterar a equipa de um jogador",
-                "Mudar nome da equipa"});
+                "Mudar nome da equipa",
+                "Criar novo jogador"});
 
         //registar os handlers
-        menuEquipa.setHandler(1, () ->listaJogadores(nomeDaequipa));
-        menuEquipa.setHandler(2, () ->alterarEquipaJogador(nomeDaequipa,escolhaJogador(nomeDaequipa)));
+        menuEquipa.setHandler(1, () ->listaJogadores(model.getEquipas().get(nomeDaequipa).getJogadores()));
+        menuEquipa.setHandler(2, () ->alterarEquipaJogador(nomeDaequipa,escolhaJogador(model.getEquipas().get(nomeDaequipa).getJogadores())));
         menuEquipa.setHandler(3, () -> mudarNomeEquipa(nomeDaequipa));
+        menuEquipa.setHandler(4, () -> makeNewPlayer(nomeDaequipa));
 
         menuEquipa.run();
     }
@@ -120,14 +130,13 @@ public class TextUI {
         this.model.addicionaEquipa(new Equipa(sh.getLine()));
     }
 
-    private void listaJogadores(String nomeDaEquipa){
-        List<String> jogadores=this.model.getEquipas().get(nomeDaEquipa).getJogadores()
-                                   .stream().map(Jogador::toString).collect(Collectors.toList());
-        StringHandler.printStrings(jogadores);
+    private void listaJogadores(List<Jogador> jogadors){
+        List<String> jogadores=jogadors.stream().map(Jogador::toString).collect(Collectors.toList());
+        StringHandler.printStrings(jogadores,false);
     }
     private void alterarEquipaJogador(String nomeDaEquipa,int numeroJogador){
         StringHandler.printString("escolha a equipa onde pretende colocar o jogador");
-        String novaEquipa = escolhaEquipa();
+        String novaEquipa = escolhaEquipa("");
         try {
             this.model.alteraJodadorDeEquipa(numeroJogador,nomeDaEquipa,novaEquipa);
         } catch (JogadorInexistenteExeption|NomeNaoExisteExceptions e) {
@@ -145,4 +154,163 @@ public class TextUI {
         catch (NomeJaExisteException|NomeNaoExisteExceptions e) {e.printStackTrace();}
     }
 
+    public void makeNewPlayer(String nomeDaequipa) {
+        NewMenu menuCriadorJogador = new NewMenu(new String[] {"Avancado",
+                "Defesa",
+                "Lateral",
+                "Medio",
+                "GuardaRedes"});
+
+        //registar os handlers
+        menuCriadorJogador.setHandler(1, () -> {
+            try {
+                model.addJogador(nomeDaequipa,PlayerByIO.criaAvancado());
+            } catch (NomeNaoExisteExceptions nomeNaoExisteExceptions) {
+                nomeNaoExisteExceptions.printStackTrace();
+            }
+        });
+        menuCriadorJogador.setHandler(2, () -> {
+            try {
+                model.addJogador(nomeDaequipa,PlayerByIO.criaDefesa());
+            } catch (NomeNaoExisteExceptions nomeNaoExisteExceptions) {
+                nomeNaoExisteExceptions.printStackTrace();
+            }
+        });
+        menuCriadorJogador.setHandler(3, () -> {
+            try {
+                model.addJogador(nomeDaequipa,PlayerByIO.criaLateral());
+            } catch (NomeNaoExisteExceptions nomeNaoExisteExceptions) {
+                nomeNaoExisteExceptions.printStackTrace();
+            }
+        });
+        menuCriadorJogador.setHandler(4, () -> {
+            try {
+                model.addJogador(nomeDaequipa,PlayerByIO.criaMedio());
+            } catch (NomeNaoExisteExceptions nomeNaoExisteExceptions) {
+                nomeNaoExisteExceptions.printStackTrace();
+            }
+        });
+        menuCriadorJogador.setHandler(5, () -> {
+            try {
+                model.addJogador(nomeDaequipa,PlayerByIO.criaGuardaRedes());
+            } catch (NomeNaoExisteExceptions nomeNaoExisteExceptions) {
+                nomeNaoExisteExceptions.printStackTrace();
+            }
+        });
+
+        menuCriadorJogador.run();
+    }
+
+    public void makeFormacao(String team,String local) {
+        StringHandler.printString("\nDepois de escolher a formação pela primeira vez, escolha sair para confirmar");
+        NewMenu menuFormacao = new NewMenu(new String[] {"1-4-3-3",
+                "1-4-4-2",
+                "1-4-2-4"});
+
+        //registar os handlers
+        menuFormacao.setHandler(1, () -> setEquipa("1433",team,local));
+        menuFormacao.setHandler(2, () -> setEquipa("1442",team,local));
+        menuFormacao.setHandler(3, () -> setEquipa("1424",team,local));
+
+        menuFormacao.run();
+    }
+    public void setEquipa(String formacao,String team,String local){
+        switch (formacao) {
+            case "1433":
+                try {
+                    if(local.equals("casa")) model2.setEquipaCasa(new formacao1433(model.getEquipas().get(team).getJogadores(), team));
+                    else if(local.equals("fora")) model2.setEquipaFora(new formacao1433(model.getEquipas().get(team).getJogadores(), team));
+                } catch (NotEnoughPlayerException e) {
+                    e.printStackTrace();
+                    makeFormacao(team,local);
+                }
+                break;
+            case "1442":
+                try {
+                    if(local.equals("casa")) model2.setEquipaCasa(new formacao1442(model.getEquipas().get(team).getJogadores(),team));
+                    else if(local.equals("fora")) model2.setEquipaFora(new formacao1442(model.getEquipas().get(team).getJogadores(),team));
+                } catch (NotEnoughPlayerException e) {
+                    e.printStackTrace();
+                    makeFormacao(team,local);
+                }
+                break;
+            case  "1424":
+                try {
+                    if(local.equals("casa")) model2.setEquipaCasa(new formacao1424(model.getEquipas().get(team).getJogadores(),team));
+                    else if(local.equals("fora")) model2.setEquipaFora(new formacao1424(model.getEquipas().get(team).getJogadores(),team));
+                } catch (NotEnoughPlayerException e) {
+                    e.printStackTrace();
+                    makeFormacao(team,local);
+                }
+        }
+    }
+
+    public void executarJogo(Date d) {
+        if (model2.getEquipaFora()==null){
+            model2= new NewGame();
+            return;
+        }
+        model2.setDataDoJogo(d);
+        StringHandler.printStrings(model2.firstHalf(),false);
+        substituicoes();
+        StringHandler.printStrings(model2.secondHalf(),false);
+        model2= new NewGame();
+    }
+
+    public void substituicoes() {
+        NewMenu menuFormacao = new NewMenu(new String[] {"Fazer substituicoes em casa",
+                "Fazer substituicoes fora"});
+
+        //registar os handlers
+        menuFormacao.setHandler(1, this::substituicoesCasa);
+        menuFormacao.setHandler(2, this::substituicoesFora);
+        menuFormacao.run();
+    }
+
+    public void substituicoesCasa() {
+        if (model2.getEquipaCasa().getSubsDisponiveis()<=0){
+            StringHandler.printString("Não tem mais substituições disponiveis");
+        }
+        else {
+            StringHandler sh = new StringHandler();
+            do {
+                if (sh.error) StringHandler.printString("Substituicao Invalida,tente outra vez");
+                StringHandler.printString("Jogador que pretende retirar ↓");
+                int antigo=escolhaJogador(model2.getEquipaCasa().getInicial());
+                StringHandler.printString("Jogador que pretende enserir ↓");
+                int novo=escolhaJogador(model2.getEquipaCasa().getSuplentes());
+                try {
+                    model2.makeSubstituicoesCasa(novo,antigo);
+                    sh.setError(false);
+                } catch (JogadorInexistenteExeption|PosicaoInvalidaException e) {
+                    e.printStackTrace();
+                    sh.setError(true);
+                }
+            } while (sh.error);
+        }
+
+    }
+
+    public void substituicoesFora() {
+        if (model2.getEquipaFora().getSubsDisponiveis()<=0){
+            StringHandler.printString("Não tem mais substituições disponiveis");
+        }
+        else {
+            StringHandler sh = new StringHandler();
+            do {
+                if (sh.error) StringHandler.printString("Substituicao Invalida,tente outra vez");
+                StringHandler.printString("Jogador que pretende retirar ↓");
+                int antigo=escolhaJogador(model2.getEquipaFora().getInicial());
+                StringHandler.printString("Jogador que pretende enserir ↓");
+                int novo=escolhaJogador(model2.getEquipaFora().getSuplentes());
+                try {
+                    model2.makeSubstituicoesFora(novo,antigo);
+                    sh.setError(false);
+                } catch (JogadorInexistenteExeption|PosicaoInvalidaException e) {
+                    e.printStackTrace();
+                    sh.setError(true);
+                }
+            } while (sh.error);
+        }
+    }
 }

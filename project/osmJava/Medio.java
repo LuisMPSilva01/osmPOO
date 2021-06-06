@@ -11,6 +11,15 @@ public class Medio extends Jogador{
         this.recuperacao=recuperacao;
     }
 
+    public Medio(Jogador j,int recuperacao){
+        super(j.get_nomeJogador(), j.get_numeroJogador(),
+                j.get_velocidade(), j.get_resistencia(),
+                j.get_destreza(), j.get_impulsao(),
+                j.get_cabeca(),j.get_remate(),
+                j.get_passe());
+        this.recuperacao=recuperacao;
+    }
+
     public Medio(Medio med){
         super(med.get_nomeJogador(), med.get_numeroJogador(),
                 med.get_velocidade(), med.get_resistencia(),
@@ -46,6 +55,25 @@ public class Medio extends Jogador{
     }
 
     public String toString(){
-        return super.toString()+"Medio: " + this.getRecuperacao() + "\n";
+        return "Medio\n"+super.toString()+"Recuperacao: " + this.getRecuperacao() + "\n";
+    }
+
+    @Override
+    public String posicao(){
+        return "Medio";
+    }
+
+    public static int skill(Jogador j){
+        int skillBase= (int) (j.overallAsAPlayer()*0.7);
+        if (j instanceof Medio){
+            return (int) (((Medio) j).get_cabeca()*0.3+skillBase);
+        }
+        if (j instanceof Avancado){
+            return skillBase;
+        }
+        if (j instanceof Defesa){
+            return skillBase;
+        }
+        else return 0;
     }
 }

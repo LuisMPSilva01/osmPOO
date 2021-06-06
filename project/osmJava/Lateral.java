@@ -13,6 +13,15 @@ public class Lateral extends Jogador{
         this.cruzamento=cruzamento;
     }
 
+    public Lateral(Jogador j,int cruzamento){
+        super(j.get_nomeJogador(), j.get_numeroJogador(),
+                j.get_velocidade(), j.get_resistencia(),
+                j.get_destreza(), j.get_impulsao(),
+                j.get_cabeca(),j.get_remate(),
+                j.get_passe());
+        this.cruzamento=cruzamento;
+    }
+
     public Lateral(Lateral lat){
         super(lat.get_nomeJogador(), lat.get_numeroJogador(),
                 lat.get_velocidade(), lat.get_resistencia(),
@@ -49,6 +58,18 @@ public class Lateral extends Jogador{
     }
 
     public String toString(){
-        return super.toString()+"Cruzamento: " + this.getCruzamento() + "\n";
+        return "Lateral\n"+super.toString()+"Cruzamento: " + this.getCruzamento() + "\n";
+    }
+    @Override
+    public String posicao(){
+        return "Lateral";
+    }
+
+    public static int skill(Jogador j){
+        int skillBase= (int) (j.overallAsAPlayer()*0.7);
+        if (j instanceof Lateral){
+            return (int) (((Lateral) j).getCruzamento()*0.3+skillBase);
+        }
+        else return 0;
     }
 }

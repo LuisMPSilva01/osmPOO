@@ -27,6 +27,7 @@ public class Equipa {
 
     public void addJogador(Jogador player){
         player.addToHistorial(this.nomeDaEquipa);
+        if(!this.numeroDisponivel(player.get_numeroJogador())) player.set_numeroJogador(this.genarateAvailableNumber());
         this.jogadores.add(player.clone());
     }
 
@@ -101,5 +102,101 @@ public class Equipa {
     public int genarateAvailableNumber(){
         return this.numerosDisponiveis().get(0);
     }
+
+    public static int nGRs(List<Jogador> players){
+        return (int) players.stream().filter(j -> j instanceof GuardaRedes).count();
+    }
+    public static int nDefs(List<Jogador> players){
+        return (int) players.stream().filter(j -> j instanceof Defesa).count();
+    }
+    public static int nLats(List<Jogador> players){
+        return (int) players.stream().filter(j -> j instanceof Lateral).count();
+    }
+    public static int nMeds(List<Jogador> players){
+        return (int) players.stream().filter(j -> j instanceof Medio).count();
+    }
+    public static int nAvans(List<Jogador> players){
+        return (int) players.stream().filter(j -> j instanceof Avancado).count();
+    }
+
+    public static Jogador getBestGR(List<Jogador> players){
+        int i=0;
+        int skill=-1;
+        Jogador best=null;
+        for (int j=0;j<players.size();j++){
+            Jogador jug=players.get(j);
+            if(GuardaRedes.skill(jug)>skill){
+                i=j;
+                skill=GuardaRedes.skill(jug);
+                best=jug.clone();
+            }
+        }
+        players.remove(i);
+        return best;
+    }
+
+    public static Jogador getBestDef(List<Jogador> players){
+        int i=0;
+        int skill=-1;
+        Jogador best=null;
+        for (int j=0;j<players.size();j++){
+            Jogador jug=players.get(j);
+            if(Defesa.skill(jug)>skill){
+                i=j;
+                skill=Defesa.skill(jug);
+                best=jug.clone();
+            }
+        }
+        players.remove(i);
+        return best;
+    }
+
+    public static Jogador getBestMed(List<Jogador> players){
+        int i=0;
+        int skill=-1;
+        Jogador best=null;
+        for (int j=0;j<players.size();j++){
+            Jogador jug=players.get(j);
+            if(Medio.skill(jug)>skill){
+                i=j;
+                skill=Medio.skill(jug);
+                best=jug.clone();
+            }
+        }
+        players.remove(i);
+        return best;
+    }
+
+    public static Jogador getBestAvan(List<Jogador> players){
+        int i=0;
+        int skill=-1;
+        Jogador best=null;
+        for (int j=0;j<players.size();j++){
+            Jogador jug=players.get(j);
+            if(Avancado.skill(jug)>skill){
+                i=j;
+                skill=Avancado.skill(jug);
+                best=jug.clone();
+            }
+        }
+        players.remove(i);
+        return best;
+    }
+    public static Jogador getBestLat(List<Jogador> players){
+        int i=0;
+        int skill=-1;
+        Jogador best=null;
+        for (int j=0;j<players.size();j++){
+            Jogador jug=players.get(j);
+            if(Lateral.skill(jug)>skill){
+                i=j;
+                skill=Lateral.skill(jug);
+                best=jug.clone();
+            }
+        }
+        players.remove(i);
+        return best;
+    }
+
 }
 

@@ -13,6 +13,15 @@ public class GuardaRedes extends Jogador{
         this.elasticidade=elasticidade;
     }
 
+    public GuardaRedes(Jogador j,int elasticidade){
+        super(j.get_nomeJogador(), j.get_numeroJogador(),
+                j.get_velocidade(), j.get_resistencia(),
+                j.get_destreza(), j.get_impulsao(),
+                j.get_cabeca(),j.get_remate(),
+                j.get_passe());
+        this.elasticidade=elasticidade;
+    }
+
     public GuardaRedes(GuardaRedes gr){
         super(gr.get_nomeJogador(), gr.get_numeroJogador(),
                 gr.get_velocidade(), gr.get_resistencia(),
@@ -55,7 +64,20 @@ public class GuardaRedes extends Jogador{
     }
 
     public String toString(){
-        return super.toString()+"Elastecidade: " + this.getElasticidade() + "\n";
+        return "GuardaRedes\n"+super.toString()+"Elastecidade: " + this.getElasticidade() + "\n";
+    }
+
+    @Override
+    public String posicao(){
+        return "GuardaRedes";
+    }
+
+    public static int skill(Jogador j){
+        int skillBase= (int) (j.overallAsAPlayer()*0.7);
+        if (j instanceof GuardaRedes){
+            return (int) (((GuardaRedes) j).getElasticidade()*0.3+skillBase);
+        }
+        else return 0;
     }
 }
 

@@ -10,6 +10,7 @@ public class Liga {
     List<Jogo> jogos;
 
 
+
     public Liga(){
         this.nome = "Europa";
         this.equipas = new HashMap<>();
@@ -80,7 +81,7 @@ public class Liga {
         if(!this.equipas.containsKey(equipaAtual)) throw new NomeNaoExisteExceptions("Equipa inexistente");
         this.equipas.get(equipaAtual).apagaJogador(NumeroJogador);
     }
-    public void addJogador(String equipa,Jogador j) throws NomeNaoExisteExceptions,JogadorInexistenteExeption{
+    public void addJogador(String equipa,Jogador j) throws NomeNaoExisteExceptions{
         if(!this.equipas.containsKey(equipa)) throw new NomeNaoExisteExceptions("Equipa inexistente");
         this.equipas.get(equipa).addJogador(j);
     }

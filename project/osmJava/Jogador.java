@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract  class Jogador {
+public class Jogador {
     private List<String> historial;
     private String nomeJogador;
     private int numeroJogador;
@@ -119,8 +119,36 @@ public abstract  class Jogador {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+    public static Jogador searchForPlayer(List<Jogador> jogadores,int nJogador) throws JogadorInexistenteExeption{
+        Jogador j=null;
+        for (Jogador player: jogadores){
+            if (player.get_numeroJogador()==nJogador) {
+                j=player;
+                break;
+            }
+        }
+        if (j==null) throw new JogadorInexistenteExeption("Jogador nao encontrado");
+        else return j.clone();
+    }
 
-    public abstract Jogador clone();
+    public static int searchForPlayerIndice(List<Jogador> jogadores,int nJogador) throws JogadorInexistenteExeption{
+        int i=-1;
+        int j=0;
+        for (Jogador player: jogadores){
+            j++;
+            if (player.get_numeroJogador()==nJogador) {
+                i=j;
+                break;
+            }
+        }
+        if (i==-1) throw new JogadorInexistenteExeption("Jogador nao encontrado");
+        else return i;
+    }
+
+
+    public Jogador clone(){
+        return new Jogador(this);
+    }
 
     public boolean equals(Object o){
         if(this == o) return true;
@@ -138,7 +166,7 @@ public abstract  class Jogador {
     }
 
     public String toString(){
-        StringBuffer sb = new StringBuffer("Nome Do Jogador:\n");
+        StringBuffer sb = new StringBuffer();
         sb.append("Nome: ").append(this.get_nomeJogador()).append(";\n");
         sb.append("Numero: ").append(this.get_numeroJogador()).append(";\n");
         sb.append("Velocidade: ").append(this.get_velocidade()).append(";\n");
@@ -153,5 +181,13 @@ public abstract  class Jogador {
 
     public void addToHistorial(String nomeEquipa){
         this.historial.add(nomeEquipa);
+    }
+
+    public int overallAsAPlayer(){
+        return (velocidade+resistencia+destreza+impulsao+cabeca+remate+passe)/7;
+    }
+
+    public String posicao(){
+        return "Nao alocado";
     }
 }

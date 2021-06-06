@@ -8,6 +8,3 @@ Alterar os stats do jogador //Nao obrigatorio
 
 Guardar a liga em ficheiro objeto (Serializable)
 Ter a opçao para ler de ficheiro objeto/começar do zero/ficheiro logs
-
-TOP PRIORITY: FIX ESCOLHE JOGADOR
-TOP PRIORITY: TESTAR AS SUBSTITUICOES
