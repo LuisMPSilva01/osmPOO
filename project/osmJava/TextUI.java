@@ -1,6 +1,5 @@
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TextUI {
@@ -32,7 +31,7 @@ public class TextUI {
         NewMenu menu = new NewMenu(new String[] {
                 " Liga de futebol",
                 " Dar nome a liga"
-        });
+       });
 
         //expressões lambda (interface funcional)
         menu.setHandler(1, this::gestaoDeEquipas);
@@ -58,7 +57,7 @@ public class TextUI {
         menuLiga.setHandler(4, () -> {
             makeFormacao(escolhaEquipa("Escolha a equipa da casa:"),"casa");
             makeFormacao(escolhaEquipa("Escolha a equipa de fora:"),"fora");
-            executarJogo(StringHandler.readADate());
+            executarJogo(LocalDate.now());
         });
 
         menuLiga.run();
@@ -114,11 +113,11 @@ public class TextUI {
                 "Alterar a equipa de um jogador",
                 "Mudar nome da equipa",
                 "Criar novo jogador"});
-
+        menuEquipa.addSaida(3);
         //registar os handlers
         menuEquipa.setHandler(1, () ->listaJogadores(model.getEquipas().get(nomeDaequipa).getJogadores()));
         menuEquipa.setHandler(2, () ->alterarEquipaJogador(nomeDaequipa,escolhaJogador(model.getEquipas().get(nomeDaequipa).getJogadores())));
-        menuEquipa.setHandler(3, () -> mudarNomeEquipa(nomeDaequipa));
+        menuEquipa.setHandler(3, () -> { mudarNomeEquipa(nomeDaequipa); });
         menuEquipa.setHandler(4, () -> makeNewPlayer(nomeDaequipa));
 
         menuEquipa.run();
@@ -203,11 +202,12 @@ public class TextUI {
     }
 
     public void makeFormacao(String team,String local) {
-        StringHandler.printString("\nDepois de escolher a formação pela primeira vez, escolha sair para confirmar");
         NewMenu menuFormacao = new NewMenu(new String[] {"1-4-3-3",
                 "1-4-4-2",
                 "1-4-2-4"});
-
+        menuFormacao.addSaida(1);
+        menuFormacao.addSaida(2);
+        menuFormacao.addSaida(3);
         //registar os handlers
         menuFormacao.setHandler(1, () -> setEquipa("1433",team,local));
         menuFormacao.setHandler(2, () -> setEquipa("1442",team,local));
@@ -244,10 +244,9 @@ public class TextUI {
                     makeFormacao(team,local);
                 }
         }
-        StringHandler.printString("\nPara confirmar escolha a opção para sair");
     }
 
-    public void executarJogo(Date d) {
+    public void executarJogo(LocalDate d) {
         if (model2.getEquipaFora()==null){
             model2= new NewGame();
             return;
@@ -290,7 +289,6 @@ public class TextUI {
                 }
             } while (sh.error);
         }
-
     }
 
     public void substituicoesFora() {

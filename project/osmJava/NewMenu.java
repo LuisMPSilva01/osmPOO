@@ -24,6 +24,8 @@ public class NewMenu {
     private List<String> opcoes;            // Lista de opções
     private List<PreCondition> disponivel;  // Lista de pré-condições
     private List<Handler> handlers;         // Lista de handlers
+    private List<Integer> quits;            // If indice estiver em quits entao sai do menu
+
 
     // Construtor
 
@@ -34,10 +36,15 @@ public class NewMenu {
         this.opcoes = Arrays.asList(opcoes);
         this.disponivel = new ArrayList<>();
         this.handlers = new ArrayList<>();
+        this.quits = new ArrayList<>();
         this.opcoes.forEach(s-> {
             this.disponivel.add(()->true);
             this.handlers.add(()->System.out.println("\nATENÇÃO: Opção não implementada!"));
         });
+    }
+
+    public void addSaida(int i){
+        this.quits.add(i);
     }
 
     // Métodos de instância
@@ -58,6 +65,7 @@ public class NewMenu {
             } else if (op>0) {
                 // executar handler
                 this.handlers.get(op-1).execute();
+                if(this.quits.contains(op)) op=0;
             }
         } while (op != 0);
     }

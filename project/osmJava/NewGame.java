@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class NewGame {
-    private Date dataDoJogo;
+    private LocalDate dataDoJogo;
     private GameTeams equipaCasa;
     private int golosCasa;
     private GameTeams equipaFora;
@@ -17,7 +17,7 @@ public class NewGame {
         this.dataDoJogo=null;
     }
 
-    public NewGame(GameTeams equipaCasa, GameTeams equipaFora,Date dataDoJogo){
+    public NewGame(GameTeams equipaCasa, GameTeams equipaFora,LocalDate dataDoJogo){
         this.equipaCasa=equipaCasa;
         this.equipaFora=equipaFora;
         golosCasa=0;
@@ -73,7 +73,7 @@ public class NewGame {
     }
 
     public String goloContraCasa(){
-        Double roll=ThreadLocalRandom.current().nextDouble(0, 1);
+        double roll=ThreadLocalRandom.current().nextDouble(0, 1);
         if(roll<ataqueContraCasa()){
             this.golosFora++;
             return generateGoal(this.equipaFora.getNomeEquipa());
@@ -81,7 +81,7 @@ public class NewGame {
         else return generateMissedAtack(this.equipaFora.getNomeEquipa());
     }
     public String goloContraFora(){
-        Double roll=ThreadLocalRandom.current().nextDouble(0, 1);
+        double roll=ThreadLocalRandom.current().nextDouble(0, 1);
         if(roll<ataqueContraFora()){
             this.golosCasa++;
             return generateGoal(this.equipaCasa.getNomeEquipa());
@@ -171,7 +171,7 @@ public class NewGame {
         return s;
     }
 
-    public void setDataDoJogo(Date dataDoJogo) {
+    public void setDataDoJogo(LocalDate dataDoJogo) {
         this.dataDoJogo = dataDoJogo;
     }
 
@@ -191,7 +191,7 @@ public class NewGame {
         this.golosFora = golosFora;
     }
 
-    public Date getDataDoJogo() {
+    public LocalDate getDataDoJogo() {
         return dataDoJogo;
     }
 
