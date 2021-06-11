@@ -12,8 +12,8 @@ public class Jogo {
     private LocalDate date;
     private List<Integer> jogadoresCasa;
     private List<Integer> jogadoresFora;
-    Map<Integer, Integer> substituicoesCasa = new HashMap<>();
-    Map<Integer, Integer> substitucoesFora = new HashMap<>();
+    private Map<Integer, Integer> substituicoesCasa = new HashMap<>();
+    private Map<Integer, Integer> substitucoesFora = new HashMap<>();
 
     public Jogo (String ec, String ef, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
         equipaCasa = ec;

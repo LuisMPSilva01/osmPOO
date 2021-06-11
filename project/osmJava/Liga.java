@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public class Liga {
     private String nome;
-    Map<String, Equipa> equipas;
-    List<Jogo> jogos;
+    private Map<String, Equipa> equipas;
+    private List<Jogo> jogos;
 
 
 

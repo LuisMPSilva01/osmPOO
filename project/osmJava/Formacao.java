@@ -8,8 +8,8 @@ public abstract class Formacao implements GameTeams{
     private Map<Integer, Integer> substituicoes;
     private List<Jogador> inicial;
     private List<Jogador> suplentes;
-    String equipa;
-    int subsDisponiveis;
+    private String equipa;
+    private int subsDisponiveis;
 
     public Formacao(){
         this.substituicoes=new Hashtable<>();

@@ -1,12 +1,23 @@
+/**
+* A classe jogador é uma extensão da classe jogador que adiciona 
+* certas caracteristicas (variaveis) especificas dete tipo de jogador.
+*/
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Jogador {
+    /**
+     * Parâmetros da classe jogador.
+     */
     private List<String> historial;
     private String nomeJogador;
     private int numeroJogador;
     private int velocidade, resistencia, destreza, impulsao, cabeca, remate, passe;
     
+    /**
+     * Este método é usado para criar um jogador base, sem atributos.
+     */
     public Jogador(){
         this.nomeJogador ="";
         this.numeroJogador = 0;
@@ -20,7 +31,19 @@ public class Jogador {
         this.historial=new ArrayList<String>();
     }
 
-
+    /**
+     * Este método é usado para criar um jogador com os atributos recebidos pela função.
+     * 
+     * @param nomeDoJogador String com o nome do jogador.
+     * @param numeroDoJogador Inteiro com o numero do jogador.
+     * @param velocidade Inteiro com a velocidade do jogador.
+     * @param resistencia Inteiro com a resistencia do jogador.
+     * @param destreza Inteiro com a destreza do jogador.
+     * @param impulsao Inteiro com a impulsao do jogador.
+     * @param jogoDeCabeca Inteiro com o jogoDeCabeca do jogador.
+     * @param remate Inteiro com o remate do jogador.
+     * @param passe Inteiro com o passe do jogador.
+     */
     public Jogador(String nomeDoJogador,int numeroDoJogador,
                    int velocidade, int resistencia,int destreza,int impulsao,
                    int jogoDeCabeca,int remate,int passe){
@@ -36,6 +59,11 @@ public class Jogador {
         this.historial= new ArrayList<String>();
     }
     
+    /**
+     * Este método é usado para criar um jogador a partir de outro jogador.
+     * 
+     * @param player jogador do qual serão copiadas as informações.
+     */
     public Jogador(Jogador player){
         this.nomeJogador = player.get_nomeJogador();
         this.numeroJogador = player.get_numeroJogador();
@@ -51,34 +79,95 @@ public class Jogador {
 
 //////////////////////////////////////////////////////////////////////////////////
     
+    /**
+     * Este método retorna a caracteristica nomeJogador de um jogador.
+     * 
+     * @return String com o nomeJogador do jogador.
+     */
     public String get_nomeJogador(){
         return this.nomeJogador;
     }
+
+    /**
+     * Este método retorna a caracteristica numeroJogador de um jogador.
+     * 
+     * @return Inteiro com o numero do jogador.
+     */
     public int get_numeroJogador(){
         return this.numeroJogador;
     };
+
+    /**
+     * Este método retorna a caracteristica velocidade de um jogador.
+     * 
+     * @return Inteiro com o velocidade do jogador.
+     */
     public int get_velocidade(){
         return this.velocidade;
     }
+
+    /**
+     * Este método retorna a caracteristica resistencia de um jogador.
+     * 
+     * @return Inteiro com o resistencia do jogador.
+     */
     public int get_resistencia(){
         return this.resistencia;
     }
+
+    /**
+     * Este método retorna a caracteristica destreza de um jogador.
+     * 
+     * @return Inteiro com o destreza do jogador.
+     */
     public int get_destreza(){
         return this.destreza;
     }
+
+    /**
+     * Este método retorna a caracteristica impulsao de um jogador.
+     * 
+     * @return Inteiro com o impulsao do jogador.
+     */
     public int get_impulsao(){
         return this.impulsao;
     }
+
+    /**
+     * Este método retorna a caracteristica cabeca de um jogador.
+     * 
+     * @return Inteiro com o cabeca do jogador.
+     */
     public int get_cabeca(){
         return this.cabeca;
     }
+
+    /**
+     * Este método retorna a caracteristica remate de um jogador.
+     * 
+     * @return Inteiro com o remate do jogador.
+     */
     public int get_remate(){
         return this.remate;
     }
+
+    /**
+     * Este método retorna a caracteristica passe de um jogador.
+     * 
+     * @return Inteiro com o passe do jogador.
+     */
     public int get_passe(){
         return this.passe;
     }
-    public List<String> getHistorial(){return new ArrayList<String>(this.historial);}
+
+    /**
+     * Este método retorna a caracteristica historial de um jogador.
+     * 
+     * @return Lista com o historial do jogador.
+     */
+    public List<String> getHistorial(){
+        return new ArrayList<String>(this.historial);
+    }
 
 ////////////////////////////////////////////////////////////////////////////////77
 
@@ -86,39 +175,88 @@ public class Jogador {
         this.nomeJogador=nomeJogador;
     }
 
+    /**
+     * Este método edita o parâmetro numeroJogador de um jogador.
+     * 
+     * @param numeroJogador Inteiro que será colocado como numeroJogador do jogador.
+     */
     public void set_numeroJogador(int numeroJogador){
         this.numeroJogador=numeroJogador;
     }
 
+    /**
+     * Este método edita o parâmetro velocidade de um jogador.
+     * 
+     * @param velocidade Inteiro que será colocado como velocidade do jogador.
+     */
     public void set_velocidade(int velocidade){
         this.velocidade=velocidade;
     }
 
+    /**
+     * Este método edita o parâmetro resistencia de um jogador.
+     * 
+     * @param resistencia Inteiro que será colocado como resistencia do jogador.
+     */
     public void set_resistencia(int resistencia){
         this.resistencia=resistencia;
     }
 
+    /**
+     * Este método edita o parâmetro destreza de um jogador.
+     * 
+     * @param destreza Inteiro que será colocado como destreza do jogador.
+     */
     public void set_destreza(int destreza){
         this.destreza=destreza;
     }
 
+    /**
+     * Este método edita o parâmetro impulsao de um jogador.
+     * 
+     * @param impulsao Inteiro que será colocado como impulsao do jogador.
+     */
     public void set_impulsao(int impulsao){
         this.impulsao=impulsao;
     }
 
+    /**
+     * Este método edita o parâmetro jogoDeCabeca de um jogador.
+     * 
+     * @param jogoDeCabeca Inteiro que será colocado como jogoDeCabeca do jogador.
+     */
     public void set_jogoDeCabeca(int jogoDeCabeca){
         this.cabeca=jogoDeCabeca;
     }
     
+    /**
+     * Este método edita o parâmetro remate de um jogador.
+     * 
+     * @param remate Inteiro que será colocado como remate do jogador.
+     */
     public void set_remate(int remate){
         this.remate=remate;
     }
 
+    /**
+     * Este método edita o parâmetro passe de um jogador.
+     * 
+     * @param passe Inteiro que será colocado como passe do jogador.
+     */
     public void set_passe(int passe){
         this.passe=passe;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Este método procura um jogador numa lista de jogadores.
+     * 
+     * @param jogadores Lista de jogadores.
+     * @param nJogador Numero do jogador pretendido.
+     * @return Jogador pretendido.
+     * @throws JogadorInexistenteExeption Input error.
+     */
     public static Jogador searchForPlayer(List<Jogador> jogadores,int nJogador) throws JogadorInexistenteExeption{
         Jogador j=null;
         for (Jogador player: jogadores){
@@ -131,6 +269,14 @@ public class Jogador {
         else return j.clone();
     }
 
+    /**
+     * Este método procura pelo indice de um jogador numa lista de jogadores.
+     * 
+     * @param jogadores Lista de jogadores.
+     * @param nJogador Numero do jogador pretendido.
+     * @return Inteiro correspondete ai indice do jogador.
+     * @throws JogadorInexistenteExeption Input error.
+     */
     public static int searchForPlayerIndice(List<Jogador> jogadores,int nJogador) throws JogadorInexistenteExeption{
         int i=-1;
         int j=0;
@@ -145,11 +291,21 @@ public class Jogador {
         else return i;
     }
 
-
+    /**
+     * Este método clona um jogador.
+     * 
+     * @return Jogador clonado.
+     */
     public Jogador clone(){
         return new Jogador(this);
     }
 
+    /**
+     * Este método testa a igualdade entre 2 jogadores.
+     * 
+     * @param o Jogador que será comparado.
+     * @return True se forem iguais, False caso contrário.
+     */
     public boolean equals(Object o){
         if(this == o) return true;
         if(this.getClass() != o.getClass()) return false;
@@ -165,6 +321,11 @@ public class Jogador {
                this.get_passe()==j.get_passe();
     }
 
+    /**
+     * Este método transforma as características de um jogador numa string.
+     * 
+     * @return String com as características.
+     */
     public String toString(){
         StringBuffer sb = new StringBuffer();
         sb.append("Nome: ").append(this.get_nomeJogador()).append(";\n");
@@ -179,14 +340,30 @@ public class Jogador {
         return sb.toString();
     }
 
+    /**
+     * Este método adiciona o nome de uma equipa ao historial do jogador.
+     * 
+     * @param nomeEquipa String com o nome da equipa a adicionar.
+     */
     public void addToHistorial(String nomeEquipa){
         this.historial.add(nomeEquipa);
     }
 
+    /**
+     * Este método calcula a skill de um jogador, mediante as suas características.
+     * 
+     * @param j Jogador cuja skill será calculada.
+     * @return Inteiro correspondente a skill do jogador.
+     */
     public int overallAsAPlayer(){
         return (velocidade+resistencia+destreza+impulsao+cabeca+remate+passe)/7;
     }
 
+    /**
+     * Este método retorna uma string com a posição de um jogador.
+     * 
+     * @return String com a posição de um jogador.
+     */
     public String posicao(){
         return "Nao alocado";
     }

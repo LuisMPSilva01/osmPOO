@@ -20,7 +20,7 @@ public class Parser {
             switch(linhaPartida[0]){
                 case "Equipa":
                     Equipa e = Equipa.parse(linhaPartida[1]);
-                    liga.equipas.put(e.getNome(), e);
+                    liga.getEquipas().put(e.getNome(), e);
                     ultima = e;
                     break;
                 case "Guarda-Redes":
@@ -50,7 +50,7 @@ public class Parser {
                     break;
                 case "Jogo":
                     Jogo jo = Jogo.parse(linhaPartida[1]);
-                    liga.jogos.add(jo);
+                    liga.getJogos().add(jo);
                     break;
                 default:
                     throw new LinhaIncorretaException();
