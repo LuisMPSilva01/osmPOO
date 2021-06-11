@@ -1,0 +1,12 @@
+Onde da print a "New menu" dar print ao nome da equipa/Liga/jogador       //interface
+
+Calcular a skill de uma equipa (é necessario passar a equipa para uma formacao
+                                (formacao implementa o metodo para calcular a skill),
+                                TIP:ver a funcao gestaoDeEquipas() em TextUI //Implementar na interface
+Fazer um historico de jogos
+Permitir que a liga deia print ao historico de jogos
+
+Alterar os stats do jogador
+
+Guardar a liga em ficheiro objeto (Serializable)
+Ter a opçao para ler de ficheiro objeto/começar do zero/ficheiro logs
